@@ -2,31 +2,20 @@
 
 ## How AI Was Used
 
-Generative AI was used to help interpret the CSC3100 final project requirements and scaffold a baseline Electron, Express, SQLite, and vanilla JavaScript implementation. AI assistance focused on project structure, REST route design, resume preview behavior, print styling, accessibility-minded markup, and documentation.
+Generative AI was used to help interpret the CSC3100 final project requirements (Help me figure out user stories and actual features of a Resume Builder) and scaffold a baseline Express, SQLite, and vanilla JavaScript implementation. I set up the basic electron parts myself without AI, and with ElectronJS documentation. The only thing I asked AI for was if I should use electron forge and some install/setup instruction questions. AI assistance focused on project structure, REST route design, resume preview behavior, print styling, and some documentation. AI Did help me write most of the comments for my own understanding.
 
 ## AI-Generated or AI-Assisted Code Areas
 
-- `src/index.js`: Electron main process, Express REST API, SQLite setup, Gemini suggestion endpoint.
+- `src/index.js`: Express REST API, Gemini suggestion endpoint.
 - `src/index.html`: Single-page application structure and accessible form markup.
-- `src/index.css`: Responsive layout, resume preview styling, and print styles.
-- `src/render.js`: Frontend state management, CRUD interactions, live preview rendering, and AI review UI.
+- `src/index.css`: Resume preview styling, and print styles.
+- `src/render.js`: Frontend state management, live preview rendering, and AI review UI.
 - `src/preload.js`: Safe Electron bridge for printing.
 
 ## Rules and Agent Files
 
 - Project agent instructions are documented in `AGENTS.md`.
-- The implementation follows the assignment requirement to use HTML, CSS, JavaScript, Electron, Express, and SQLite without React, MVC, or SSR.
 
 ## MCP Server Details
 
-No project-specific MCP server is required to run the app. The development assistant used local file and shell tooling available in the Codex environment.
-
-## Gemini API Configuration
-
-The app does not include a developer API key. Users can paste their own Gemini API key in the AI Review section. That key is stored locally in SQLite through the `/api/settings/gemini-key` endpoint.
-
-When no Gemini key is saved, the app returns local resume-writing suggestions so the UI remains usable during development and demos.
-
-## Privacy Note
-
-Only text entered into the AI Review text box is sent to Gemini, and only when a user has saved their own API key. Resume data remains in the local SQLite database.
+No project-specific MCP server is required to run the app nor was used. The development assistant used local file and shell tooling available in the Codex environment. I didn't make an mcp server to help me develop this. I just used codex and VSCode Copilot.

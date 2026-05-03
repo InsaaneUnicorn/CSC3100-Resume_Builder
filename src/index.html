@@ -8,22 +8,22 @@
     <link rel="apple-touch-icon" href="app-icon.svg" />
     <link rel="stylesheet" href="morph_bootstrap.css" />
     <link rel="stylesheet" href="index.css" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; connect-src 'self' http://localhost:8000; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
-    />
+    
     <script defer src="render.js"></script>
   </head>
   <body>
     <header class="app-shell-header">
-      <div>
-        <p class="eyebrow">ResumeCraft</p>
-        <h1>Build a focused resume for each application.</h1>
+      <div class="d-flex flex-row">
+        <img src="app-icon.svg" alt="" width="40" height="40" class="me-2" />
+        <div>
+        <h1>ResumeCraft</h1>
+        <p class="eyebrow">Build a focused resume for each application.</p>
+        </div>
       </div>
       <div class="header-actions" aria-label="Application actions">
-        <button class="btn btn-outline-secondary" id="openAttributionButton" type="button">Attribution</button>
-        <button class="btn btn-outline-primary" id="saveAllButton" type="button">Save All</button>
-        <button class="btn btn-primary" id="printButton" type="button">Print / PDF</button>
+        <button class="btn btn-outline-primary" id="saveAllButton" type="button"><span><img src="icons/save.png" class="" alt="" width="16" height="16" class="me-2"/></span>Save All</button>
+        <button class="btn btn-outline-secondary" id="printButton" type="button"><span><img src="icons/download.png" alt="" width="16" height="16" class="me-2"/></span>Print / PDF</button>
+        <button class="btn btn-outline-secondary" id="openAttributionButton" type="button"><span><img src="icons/info.png" alt="" width="16" height="16" class="me-2"/></span>Attribution</button>
       </div>
     </header>
 
@@ -42,7 +42,7 @@
           <div class="panel-heading">
             <div>
               <p class="section-label">Core details</p>
-              <h2 id="profileHeading">Student Profile</h2>
+              <h2 id="profileHeading">Profile</h2>
             </div>
             <span class="status-chip" id="saveStatus">Ready</span>
           </div>
@@ -50,31 +50,31 @@
           <form class="form-grid" id="profileForm">
             <label>
               Full name
-              <input class="form-control" name="fullName" autocomplete="name" required />
+              <input class="form-control" name="fullName" autocomplete="name" required aria-label="Full Name"/>
             </label>
             <label>
               Headline
-              <input class="form-control" name="headline" placeholder="Computer Science Student" />
+              <input class="form-control" name="Title" placeholder="Current Title / Occupation" aria-label="Title" />
             </label>
             <label>
               Email
-              <input class="form-control" name="email" type="email" autocomplete="email" />
+              <input class="form-control" name="email" type="email" autocomplete="email" aria-label="Email" />
             </label>
             <label>
               Phone
-              <input class="form-control" name="phone" autocomplete="tel" />
+              <input class="form-control" name="Phone Number" autocomplete="tel" aria-label="Phone Number"/>
             </label>
             <label>
               Location
-              <input class="form-control" name="location" autocomplete="address-level2" />
+              <input class="form-control" name="Location" autocomplete="address-level2" aria-label="Location"/>
             </label>
             <label>
               Website or LinkedIn
-              <input class="form-control" name="website" />
+              <input class="form-control" name="website" aria-label="Website or LinkedIn"/>
             </label>
             <label class="span-2">
               Professional summary
-              <textarea class="form-control" name="summary" rows="5"></textarea>
+              <textarea class="form-control" name="Professional Summary" rows="5" aria-label="Professional Summary"></textarea>
             </label>
           </form>
         </section>
@@ -133,13 +133,13 @@
           <div class="settings-grid">
             <label>
               Gemini API key
-              <input class="form-control" id="geminiKeyInput" type="password" placeholder="Paste your key for local storage" />
+              <input class="form-control" id="geminiKeyInput" type="password" placeholder="Paste your key for local storage" aria-label="Insert Gemini-Key" />
             </label>
-            <button class="btn btn-outline-primary align-self-end" id="saveKeyButton" type="button">Save Key</button>
+            <button class="btn btn-outline-primary align-self-end" id="saveKeyButton" type="button"><img src="icons/key.png" alt="" width="32" height="32" class="me-2"/>Save Key</button>
           </div>
           <label>
             Resume content to review
-            <textarea class="form-control" id="aiTextInput" rows="8" placeholder="Paste a bullet, summary, or job responsibility here."></textarea>
+            <textarea class="form-control" id="aiTextInput" rows="8" placeholder="What kind of job are you applying for? What are the jobs qualifications and requirements?"></textarea>
           </label>
           <button class="btn btn-primary mt-3" id="reviewButton" type="button">Review With AI</button>
           <div class="suggestions-box" id="suggestionsBox" aria-live="polite"></div>
@@ -169,31 +169,31 @@
         <div class="form-grid">
           <label data-entry-field="title">
             Title / Name
-            <input class="form-control" name="title" required />
+            <input class="form-control" name="title" aria-label="Title" required />
           </label>
           <label data-entry-field="organization">
             Organization / Issuer
-            <input class="form-control" name="organization" />
+            <input class="form-control" name="organization_issuer" aria-label="Organization / Issuer"/>
           </label>
           <label data-entry-field="category">
             Category
-            <input class="form-control" name="category" />
+            <input class="form-control" name="category" aria-label="Category"/>
           </label>
           <label data-entry-field="location">
             Location
-            <input class="form-control" name="location" />
+            <input class="form-control" name="location" aria-label="Location"/>
           </label>
           <label data-entry-field="startDate">
             Start / Date
-            <input class="form-control" name="startDate" />
+            <input class="form-control" name="startDate" aria-label="Start Date"/>
           </label>
           <label data-entry-field="endDate">
             End
-            <input class="form-control" name="endDate" />
+            <input class="form-control" name="endDate" aria-label="End Date"/>
           </label>
           <label class="span-2">
             Details, one per line
-            <textarea class="form-control" name="details" rows="6"></textarea>
+            <textarea class="form-control" name="details" rows="6" aria-label="Details, one per line"></textarea>
           </label>
         </div>
         <div class="form-check">
