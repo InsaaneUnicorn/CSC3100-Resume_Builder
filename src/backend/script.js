@@ -1,12 +1,2 @@
-const express = require('express') 
-const cors = require('cors') 
-
-const PORT_NUMBER = 8000 
-
-const app = express() 
-app.use(express.json()) 
-app.use(cors({origin: '*'})) 
-
-app.listen(HTTP_PORT, () => {
-    console.log(`Server running on port ${HTTP_PORT}`)
-})
+// Backend logic now lives in src/index.js so Electron can start the Express API
+// and SQLite database together with the desktop window.

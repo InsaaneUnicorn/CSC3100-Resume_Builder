@@ -2,31 +2,218 @@
 <html lang="en-US">
   <head>
     <meta charset="UTF-8" />
-    <title>Resume Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ResumeCraft</title>
+    <link rel="icon" href="app-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="app-icon.svg" />
     <link rel="stylesheet" href="morph_bootstrap.css" />
-    <!-- Google Font Links (Monsteratt Font)-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <!-- front end JS that is set to not run until after the preload/index.js is loaded-->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;"> <!-- electron yelled at me for not having this and putting users at risk so I found this in the docs -->
+    <link rel="stylesheet" href="index.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self' http://localhost:8000; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+    />
     <script defer src="render.js"></script>
   </head>
-  <body class="monsterrat-light vh-100 d-flex align-items-center justify-content-center">
-
-    <!-- <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p> -->
-
-    <div class="d-flex justify-content-center align-items-center container">
-      <div class="card col-10 col-md-8 col-lg-6">
-        <div class="card-body">
-          <h5 class="card-title">Card Title</h5>
-          <p class="card-text">This is a card component styled with Morph Bootstrap.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+  <body>
+    <header class="app-shell-header">
+      <div>
+        <p class="eyebrow">ResumeCraft</p>
+        <h1>Build a focused resume for each application.</h1>
       </div>
+      <div class="header-actions" aria-label="Application actions">
+        <button class="btn btn-outline-secondary" id="openAttributionButton" type="button">Attribution</button>
+        <button class="btn btn-outline-primary" id="saveAllButton" type="button">Save All</button>
+        <button class="btn btn-primary" id="printButton" type="button">Print / PDF</button>
+      </div>
+    </header>
 
-    </div>
+    <main class="app-layout">
+      <nav class="sidebar" aria-label="Resume builder sections">
+        <button class="nav-pill active" data-panel="profilePanel" type="button">Profile</button>
+        <button class="nav-pill" data-panel="jobsPanel" type="button">Jobs</button>
+        <button class="nav-pill" data-panel="skillsPanel" type="button">Skills</button>
+        <button class="nav-pill" data-panel="certificationsPanel" type="button">Certifications</button>
+        <button class="nav-pill" data-panel="awardsPanel" type="button">Awards</button>
+        <button class="nav-pill" data-panel="aiPanel" type="button">AI Review</button>
+      </nav>
 
+      <section class="workspace" aria-live="polite">
+        <section class="builder-panel active" id="profilePanel" aria-labelledby="profileHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Core details</p>
+              <h2 id="profileHeading">Student Profile</h2>
+            </div>
+            <span class="status-chip" id="saveStatus">Ready</span>
+          </div>
+
+          <form class="form-grid" id="profileForm">
+            <label>
+              Full name
+              <input class="form-control" name="fullName" autocomplete="name" required />
+            </label>
+            <label>
+              Headline
+              <input class="form-control" name="headline" placeholder="Computer Science Student" />
+            </label>
+            <label>
+              Email
+              <input class="form-control" name="email" type="email" autocomplete="email" />
+            </label>
+            <label>
+              Phone
+              <input class="form-control" name="phone" autocomplete="tel" />
+            </label>
+            <label>
+              Location
+              <input class="form-control" name="location" autocomplete="address-level2" />
+            </label>
+            <label>
+              Website or LinkedIn
+              <input class="form-control" name="website" />
+            </label>
+            <label class="span-2">
+              Professional summary
+              <textarea class="form-control" name="summary" rows="5"></textarea>
+            </label>
+          </form>
+        </section>
+
+        <section class="builder-panel" id="jobsPanel" aria-labelledby="jobsHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Experience library</p>
+              <h2 id="jobsHeading">Jobs and Responsibilities</h2>
+            </div>
+            <button class="btn btn-primary" data-add-type="jobs" type="button">Add Job</button>
+          </div>
+          <div class="collection-list" id="jobsList"></div>
+        </section>
+
+        <section class="builder-panel" id="skillsPanel" aria-labelledby="skillsHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Selectable groups</p>
+              <h2 id="skillsHeading">Skills and Categories</h2>
+            </div>
+            <button class="btn btn-primary" data-add-type="skills" type="button">Add Skill Group</button>
+          </div>
+          <div class="collection-list" id="skillsList"></div>
+        </section>
+
+        <section class="builder-panel" id="certificationsPanel" aria-labelledby="certificationsHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Credentials</p>
+              <h2 id="certificationsHeading">Certifications</h2>
+            </div>
+            <button class="btn btn-primary" data-add-type="certifications" type="button">Add Certification</button>
+          </div>
+          <div class="collection-list" id="certificationsList"></div>
+        </section>
+
+        <section class="builder-panel" id="awardsPanel" aria-labelledby="awardsHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Recognition</p>
+              <h2 id="awardsHeading">Awards</h2>
+            </div>
+            <button class="btn btn-primary" data-add-type="awards" type="button">Add Award</button>
+          </div>
+          <div class="collection-list" id="awardsList"></div>
+        </section>
+
+        <section class="builder-panel" id="aiPanel" aria-labelledby="aiHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Generative AI helper</p>
+              <h2 id="aiHeading">Gemini Resume Review</h2>
+            </div>
+          </div>
+          <div class="settings-grid">
+            <label>
+              Gemini API key
+              <input class="form-control" id="geminiKeyInput" type="password" placeholder="Paste your key for local storage" />
+            </label>
+            <button class="btn btn-outline-primary align-self-end" id="saveKeyButton" type="button">Save Key</button>
+          </div>
+          <label>
+            Resume content to review
+            <textarea class="form-control" id="aiTextInput" rows="8" placeholder="Paste a bullet, summary, or job responsibility here."></textarea>
+          </label>
+          <button class="btn btn-primary mt-3" id="reviewButton" type="button">Review With AI</button>
+          <div class="suggestions-box" id="suggestionsBox" aria-live="polite"></div>
+        </section>
+      </section>
+
+      <aside class="preview-pane" aria-labelledby="previewHeading">
+        <div class="preview-toolbar">
+          <div>
+            <p class="section-label">Live output</p>
+            <h2 id="previewHeading">Resume Preview</h2>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary" id="copyHtmlButton" type="button">Copy HTML</button>
+        </div>
+        <article class="resume-page" id="resumePreview"></article>
+      </aside>
+    </main>
+
+    <dialog id="entryDialog" aria-labelledby="entryDialogTitle">
+      <form method="dialog" id="entryForm">
+        <div class="dialog-heading">
+          <h2 id="entryDialogTitle">Add Item</h2>
+          <button class="btn-close" value="cancel" aria-label="Close"></button>
+        </div>
+        <input type="hidden" name="id" />
+        <input type="hidden" name="type" />
+        <div class="form-grid">
+          <label>
+            Title / Name
+            <input class="form-control" name="title" required />
+          </label>
+          <label>
+            Organization / Issuer
+            <input class="form-control" name="organization" />
+          </label>
+          <label>
+            Category
+            <input class="form-control" name="category" />
+          </label>
+          <label>
+            Location
+            <input class="form-control" name="location" />
+          </label>
+          <label>
+            Start / Date
+            <input class="form-control" name="startDate" />
+          </label>
+          <label>
+            End
+            <input class="form-control" name="endDate" />
+          </label>
+          <label class="span-2">
+            Details, one per line
+            <textarea class="form-control" name="details" rows="6"></textarea>
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" id="entrySelected" name="isSelected" type="checkbox" checked />
+          <label class="form-check-label" for="entrySelected">Include this item in the resume</label>
+        </div>
+        <div class="dialog-actions">
+          <button class="btn btn-outline-secondary" value="cancel" type="button" id="cancelEntryButton">Cancel</button>
+          <button class="btn btn-primary" type="submit">Save Item</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="attributionDialog" aria-labelledby="attributionHeading">
+      <div class="dialog-heading">
+        <h2 id="attributionHeading">Attribution and AI Use</h2>
+        <button class="btn-close" id="closeAttributionButton" aria-label="Close"></button>
+      </div>
+      <p>ResumeCraft is built with Electron, Node.js, Express, SQLite, Bootstrap, and vanilla JavaScript.</p>
+      <p>Generative AI support is optional. If a user provides a Gemini API key, the app sends only the text entered in the review box to Gemini for resume suggestions. No developer API key is bundled.</p>
+    </dialog>
   </body>
 </html>

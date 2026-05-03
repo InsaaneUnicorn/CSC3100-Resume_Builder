@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">ResumeCraft icon</title>
+  <desc id="desc">A blue resume document with a check mark and pencil.</desc>
+  <rect width="128" height="128" rx="24" fill="#1967d2"/>
+  <path d="M35 20h43l20 20v68H35z" fill="#ffffff"/>
+  <path d="M78 20v22h20z" fill="#c8dafc"/>
+  <path d="M49 55h31M49 70h31M49 85h18" stroke="#637083" stroke-width="6" stroke-linecap="round"/>
+  <path d="m36 94 13 13 31-36" fill="none" stroke="#1f7a4d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m87 74 10-10 9 9-10 10-12 3z" fill="#f6b73c"/>
+</svg>
