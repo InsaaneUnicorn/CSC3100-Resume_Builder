@@ -13,6 +13,33 @@ const typeLabels = {
   awards: 'Award',
 };
 
+const entryFieldRules = {
+  jobs: {
+    title: 'Job title',
+    organization: 'Employer',
+    category: 'Category',
+    location: 'Location',
+    startDate: 'Start date',
+    endDate: 'End date',
+  },
+  skills: {
+    title: 'Skill group name',
+    category: 'Category',
+  },
+  certifications: {
+    title: 'Certification name',
+    organization: 'Issuer',
+    category: 'Category',
+    location: 'Credential ID or URL',
+    startDate: 'Date earned',
+    endDate: 'Expiration date',
+  },
+  awards: {
+    title: 'Award name',
+    category: 'Category',
+  },
+};
+
 const listTargets = {
   jobs: document.querySelector('#jobsList'),
   skills: document.querySelector('#skillsList'),
@@ -102,32 +129,55 @@ function textareaToDetails(value) {
 
 function openEntryDialog(type, entry = null) {
   entryForm.reset();
+  configureEntryDialog(type);
   entryForm.elements.type.value = type;
   entryForm.elements.id.value = entry?.id || '';
   entryForm.elements.title.value = entry?.title || '';
-  entryForm.elements.organization.value = entry?.organization || '';
-  entryForm.elements.category.value = entry?.category || '';
-  entryForm.elements.location.value = entry?.location || '';
-  entryForm.elements.startDate.value = entry?.startDate || '';
-  entryForm.elements.endDate.value = entry?.endDate || '';
+  entryForm.elements.organization.value = entryFieldRules[type].organization ? entry?.organization || '' : '';
+  entryForm.elements.category.value = entryFieldRules[type].category ? entry?.category || '' : '';
+  entryForm.elements.location.value = entryFieldRules[type].location ? entry?.location || '' : '';
+  entryForm.elements.startDate.value = entryFieldRules[type].startDate ? entry?.startDate || '' : '';
+  entryForm.elements.endDate.value = entryFieldRules[type].endDate ? entry?.endDate || '' : '';
   entryForm.elements.details.value = detailsToTextarea(entry?.details || []);
   entryForm.elements.isSelected.checked = entry?.isSelected !== false;
   document.querySelector('#entryDialogTitle').textContent = `${entry ? 'Edit' : 'Add'} ${typeLabels[type]}`;
   entryDialog.showModal();
 }
 
+function configureEntryDialog(type) {
+  const rules = entryFieldRules[type];
+  document.querySelectorAll('[data-entry-field]').forEach((wrapper) => {
+    const fieldName = wrapper.dataset.entryField;
+    const input = wrapper.querySelector('input');
+    const labelText = rules[fieldName];
+
+    if (!labelText) {
+      wrapper.hidden = true;
+      if (input) {
+        input.value = '';
+      }
+      return;
+    }
+
+    wrapper.hidden = false;
+    wrapper.childNodes[0].textContent = labelText;
+  });
+}
+
 async function saveEntry(event) {
   event.preventDefault();
   const formData = new FormData(entryForm);
   const id = formData.get('id');
+  const type = formData.get('type');
+  const rules = entryFieldRules[type];
   const entry = {
-    type: formData.get('type'),
+    type,
     title: formData.get('title'),
-    organization: formData.get('organization'),
-    category: formData.get('category'),
-    location: formData.get('location'),
-    startDate: formData.get('startDate'),
-    endDate: formData.get('endDate'),
+    organization: rules.organization ? formData.get('organization') || '' : '',
+    category: rules.category ? formData.get('category') || '' : '',
+    location: rules.location ? formData.get('location') || '' : '',
+    startDate: rules.startDate ? formData.get('startDate') || '' : '',
+    endDate: rules.endDate ? formData.get('endDate') || '' : '',
     details: textareaToDetails(formData.get('details')),
     isSelected: entryForm.elements.isSelected.checked,
   };
