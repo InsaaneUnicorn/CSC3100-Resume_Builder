@@ -215,16 +215,16 @@ function textareaToDetails(value) {
 function openEntryDialog(type, entry = null) {
   entryForm.reset();
   configureEntryDialog(type);
-  entryForm.elements.type.value = type;
-  entryForm.elements.id.value = entry?.id || '';
-  entryForm.elements.title.value = entry?.title || '';
-  entryForm.elements.organization.value = entryFieldRules[type].organization ? entry?.organization || '' : '';
-  entryForm.elements.category.value = entryFieldRules[type].category ? entry?.category || '' : '';
-  entryForm.elements.location.value = entryFieldRules[type].location ? entry?.location || '' : '';
-  entryForm.elements.startDate.value = entryFieldRules[type].startDate ? entry?.startDate || '' : '';
-  entryForm.elements.endDate.value = entryFieldRules[type].endDate ? entry?.endDate || '' : '';
-  entryForm.elements.details.value = detailsToTextarea(entry?.details || []);
-  entryForm.elements.isSelected.checked = entry?.isSelected !== false;
+  if (entryForm.elements.type) entryForm.elements.type.value = type;
+  if (entryForm.elements.id) entryForm.elements.id.value = entry?.id || '';
+  if (entryForm.elements.title) entryForm.elements.title.value = entry?.title || '';
+  if (entryForm.elements.organization && entryFieldRules[type].organization) entryForm.elements.organization.value = entry?.organization || '';
+  if (entryForm.elements.category && entryFieldRules[type].category) entryForm.elements.category.value = entry?.category || '';
+  if (entryForm.elements.location && entryFieldRules[type].location) entryForm.elements.location.value = entry?.location || '';
+  if (entryForm.elements.startDate && entryFieldRules[type].startDate) entryForm.elements.startDate.value = entry?.startDate || '';
+  if (entryForm.elements.endDate && entryFieldRules[type].endDate) entryForm.elements.endDate.value = entry?.endDate || '';
+  if (entryForm.elements.details) entryForm.elements.details.value = detailsToTextarea(entry?.details || []);
+  if (entryForm.elements.isSelected) entryForm.elements.isSelected.checked = entry?.isSelected !== false;
   document.querySelector('#entryDialogTitle').textContent = `${entry ? 'Edit' : 'Add'} ${typeLabels[type]}`;
   entryDialog.showModal();
 }
