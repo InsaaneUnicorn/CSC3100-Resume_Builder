@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="morph_bootstrap.css" />
+    <!-- Google Font Links (Monsteratt Font)-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- front end JS that is set to not run until after the preload/index.js is loaded-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;"> <!-- electron yelled at me for not having this and putting users at risk so I found this in the docs -->
+    <script defer src="render.js"></script>
+  </head>
+  <body class="monsterrat-light vh-100 d-flex align-items-center justify-content-center">
+
+    <!-- <h1>💖 Hello World!</h1>
+    <p>Welcome to your Electron application.</p> -->
+
+    <div class="d-flex justify-content-center align-items-center container">
+      <div class="card col-10 col-md-8 col-lg-6">
+        <div class="card-body">
+          <h5 class="card-title">Card Title</h5>
+          <p class="card-text">This is a card component styled with Morph Bootstrap.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>
